@@ -3,12 +3,11 @@ A Dockerized REST API for translating text using Helsinki-NLP MarianMT models. S
 
 ## Features
 * App is built in a Docker container
-* It imports the Marian Models while building the Dockerfile to make the translation request quicker
 * It preloads the model upon startup to avoid slowing down or racing
+* Uses a lock to make loaded models thread safe
 * It limits user input
 * It checks whether user filled the correct request
 * It raises errors such as 400 for value erros and 500 for any other case
-* Saves previously loaded models for faster translation and uses locks to make loaded model thread safe
 
 ## Build and run
 ``` bash
