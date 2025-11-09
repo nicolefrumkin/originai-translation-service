@@ -4,14 +4,11 @@ from transformers import MarianTokenizer, MarianMTModel
 
 app = FastAPI()
 
-# ----- your translation logic (slightly refactored to cache models) -----
-
 MODEL_MAP = {
     ("he", "ru"): "Helsinki-NLP/opus-mt-he-ru",
     ("en", "he"): "Helsinki-NLP/opus-mt-en-he",
 }
 
-# cache so we don't download/load every request
 _loaded_models = {}
 
 def get_model_and_tokenizer(src_lang, tgt_lang):
@@ -35,23 +32,32 @@ def translate_text(src_lang: str, tgt_lang: str, text: str) -> str:
     translated_text = tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
     return translated_text
 
-# ----- request/response schemas -----
 
 class TranslateRequest(BaseModel):
     source_lang: str
     target_lang: str
     text: str
 
+
 class TranslateResponse(BaseModel):
     translation: str
 
-# ----- REST endpoint -----
 
 @app.post("/translate", response_model=TranslateResponse)
 def translate_endpoint(req: TranslateRequest):
+    if not req.source_lang or not req.target_lang:
+        raise HTTPException(status_code=400, detail="source_lang and target_lang are required")
+
+    if not req.text or not req.text.strip():
+        raise HTTPException(status_code=400, detail="text must not be empty")
+
     try:
         result = translate_text(req.source_lang, req.target_lang, req.text)
         return TranslateResponse(translation=result)
+
     except ValueError as e:
-        # for unsupported language pair
         raise HTTPException(status_code=400, detail=str(e))
+
+    except Exception as e:
+
+        raise HTTPException(status_code=500, detail="Translation failed")

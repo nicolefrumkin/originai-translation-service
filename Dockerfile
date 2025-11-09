@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY main.py .
 
-RUN pip install --no-cache-dir fastapi uvicorn transformers torch sentencepiece sacremoses
+RUN pip install fastapi uvicorn transformers torch sentencepiece sacremoses
 
 # Expose the FastAPI default port
 EXPOSE 8000
