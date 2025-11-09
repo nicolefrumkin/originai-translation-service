@@ -21,9 +21,9 @@ def test_translate_success():
 
 
 def test_missing_langs():
-    """Should return 400 when missing source or target language"""
+    """Should return 422 when missing source or target language"""
     response = client.post("/translate", json={"text": "Hello"})
-    assert response.status_code == 400
+    assert response.status_code == 422
     assert "source_lang" in response.text or "target_lang" in response.text
 
 

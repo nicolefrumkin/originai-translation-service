@@ -57,12 +57,8 @@ class TranslateResponse(BaseModel):
 
 @app.post("/translate", response_model=TranslateResponse)
 def translate_endpoint(req: TranslateRequest):
-    if not req.source_lang or not req.target_lang:
-        raise HTTPException(status_code=400, detail="source_lang and target_lang are required")
-
     if not req.text or not req.text.strip():
         raise HTTPException(status_code=400, detail="text must not be empty")
-
     MAX_CHARS = 2000
     if len(req.text) > MAX_CHARS:
         raise HTTPException(status_code=400, detail=f"text too long (max {MAX_CHARS} characters)")

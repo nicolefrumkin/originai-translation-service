@@ -16,6 +16,7 @@ docker build -t originai-translator .
 docker run -p 8000:8000 originai-translator
 ```
 
+
 After running, open a second terminal and send a post request:
 ``` bash 
 $r = Invoke-RestMethod -Uri "http://localhost:8000/translate" `
@@ -40,5 +41,5 @@ You’ll get a JSON response:
 ## Testing
 Run with the following command after building:
 ``` bash
-docker run -it --rm originai-translator pytest -v
+docker run -it --rm originai-translator pytest -v -W ignore::DeprecationWarning
 ```
