@@ -38,7 +38,7 @@ You’ll get a JSON response:
 ```
 
 ## Testing
-Run with:
+Run with the following command after building:
 ``` bash
-pytest -v
+docker run -it --rm originai-translator pytest -v
 ```
