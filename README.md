@@ -1,4 +1,4 @@
-# originai-translation-service
+# OriginAI Translation Service
 A Dockerized REST API for translating text using Helsinki-NLP MarianMT models. Supports Hebrew → Russian and English → Hebrew translations with Hugging Face Transformers.
 
 ## Features
