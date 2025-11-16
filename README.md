@@ -19,9 +19,9 @@ docker run -p 8000:8000 originai-translator
 After running, open a second terminal and send a post request:
 ``` bash 
 $r = Invoke-RestMethod -Uri "http://localhost:8000/translate" `
->>   -Method POST `
->>   -Headers @{ "Content-Type" = "application/json" } `
->>   -Body '{"source_lang": "en", "target_lang": "he", "text": "This is a test, my name is Nicole"}'
+   -Method POST `
+   -Headers @{ "Content-Type" = "application/json" } `
+   -Body '{"source_lang": "en", "target_lang": "he", "text": "This is a test, my name is Nicole"}'
 $r.translation
 ```
 Or use the Swagger UI:
